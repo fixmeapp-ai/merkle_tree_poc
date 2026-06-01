@@ -1,0 +1,20 @@
+services:
+  postgres_airflow:
+    image: postgres:18
+    container_name: postgres_airflow
+    environment:
+      POSTGRES_USER: balint
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: testing
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U balint -d testing"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+ 
+volumes:
+  postgres_data:
